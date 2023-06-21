@@ -1,5 +1,6 @@
 // IMPORT ANY NEEDED COMPONENTS HERE
 import { Dataset } from "./data/dataset"
+import { useState } from "react"
 import "./App.css"
 import Header from "./components/Header/Header"
 import Instructions from "./components/Instructions/Instructions"
@@ -31,6 +32,10 @@ export function App() {
   const restaurants = myData.restaurants
   */
 
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedRestaurant, setSelectedRestaurant] = useState("");
+  const [selectedItem, setSelectedItem] = useState("");
+
   return (
     <main className="App">
       {/* CATEGORIES COLUMN */}
@@ -41,9 +46,19 @@ export function App() {
 
 
           {
-            categories.map( (category) => (
-              <Chip label={category}/>
-            ))
+            categories.map( (category) => {
+
+              const isChipActive = category === selectedCategory ? true : false;
+
+              return (<Chip 
+                        key = {category}
+                        label={category}
+                        isActive = {isChipActive}
+                        chipClick={ () => {
+                          setSelectedCategory(category);
+                        } }
+                        />)
+            })
           }
 
 
@@ -61,11 +76,21 @@ export function App() {
           <div className="restaurants options">
             {/* YOUR CODE HERE */}
 
+
             {
-              restaurants.map( (restaurant) => (
-                <Chip label={restaurant}/>
-              ))
+              restaurants.map( (restaurant) => {
+                const isChipActive = restaurant === selectedRestaurant ? true : false;
+                return (<Chip 
+                          key = {restaurant}
+                          label = {restaurant} 
+                          isActive = {isChipActive}
+                          chipClick={ () => {
+                            setSelectedRestaurant(restaurant);
+                          } }
+                          />)
+              })
             }
+
 
           </div>
         </div>
@@ -78,6 +103,10 @@ export function App() {
           <div className="MenuItemButtons menu-items">
             <h2 className="title">Menu Items</h2>
             {/* YOUR CODE HERE */}
+
+            {/*
+              data.filter( (item_name))
+          */}
           </div>
 
           {/* NUTRITION FACTS */}
